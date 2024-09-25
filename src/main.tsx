@@ -1,10 +1,32 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.js";
+import "./assets/styles/index.css";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { Colors } from "./utils/Colors.ts"
 
-createRoot(document.getElementById('root')!).render(
+const theme = createTheme({
+  palette: {
+    background: Colors.background,
+    primary: Colors.primary,
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+    },
+  },
+});
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </StrictMode>
+);
+
