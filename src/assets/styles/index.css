@@ -8,3 +8,92 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.path-group {
+  opacity: 0;
+  animation: fadeInDesktop 1s ease forwards;
+}
+
+.path-group-mobile {
+  opacity: 0;
+  animation: fadeInMobile 1s ease forwards;
+}
+
+@keyframes fadeInDesktop {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+/* Adjust animation properties for each group as needed */
+.path-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.path-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.path-group:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.path-group:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.path-group:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.path-group:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.path-group:nth-child(7) {
+  animation-delay: 0.7s;
+}
+
+.path-group-mobile:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.path-group-mobile:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.path-group-mobile:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.path-group-mobile:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.path-group-mobile:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.path-group-mobile:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.path-group-mobile:nth-child(7) {
+  animation-delay: 0.7s;
+}
