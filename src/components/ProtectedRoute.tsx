@@ -1,0 +1,17 @@
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import TopNav from "./TopNav";
+
+function ProtectedRoute() {
+  return (
+    <div className="flex w-full h-screen divide-x divide-gray-700">
+      <Sidebar />
+      <div className="flex flex-col h-full w-full">
+        <TopNav />
+        <Outlet />
+      </div>
+    </div>
+  );
+}
+
+export default ProtectedRoute;
