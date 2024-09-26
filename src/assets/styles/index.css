@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 :root {
+  --background: #1c2932;
+  --primary-main: #62a0d9;
+  --primary-light: #e2e4e8;
+  --primary-dark: #2f3b45;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
