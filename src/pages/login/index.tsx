@@ -119,6 +119,14 @@ function LoginFields({
   failed,
 }: any) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  // Router
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="flex flex-col gap-5">
       <CustomUnderlineField
@@ -159,6 +167,7 @@ function LoginFields({
         sx={{
           color: colors.grey[100],
         }}
+        onClick={handleLogin}
       >
         Log In
         {isMobile && loading && (
