@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../utils/Colors";
 import Logo from "../assets/images/logo.png";
 import {
@@ -10,12 +10,7 @@ import {
 
 function Sidebar() {
   return (
-    <div
-      className="w-1/2 max-w-60 h-full p-4 pt-0 flex flex-col gap-3"
-      style={{
-        backgroundColor: Colors.primary.dark,
-      }}
-    >
+    <div className="w-1/2 max-w-60 h-full p-4 pt-0 flex flex-col gap-3 bg-primary-dark">
       <img src={Logo} alt="Logo" className="size-16 my-3" />
       <nav className="flex flex-col gap-2">
         <NavButtons displayText="Dashboard" Icon={Dashboard} />
@@ -34,20 +29,20 @@ function NavButtons({
   Icon: SvgIconComponent;
 }) {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/${displayText.toLowerCase()}`);
+  };
   return (
     <button
       className={
         "p-4 rounded-md font-semibold tracking-wider hover:bg-gray-600 " +
         (location.pathname === `/${displayText.toLowerCase()}`
-          ? "text-gray-100"
+          ? "text-gray-100 bg-primary-main"
           : "text-gray-300")
       }
-      style={{
-        backgroundColor:
-          location.pathname === `/${displayText.toLowerCase()}`
-            ? Colors.primary.main
-            : "",
-      }}
+      onClick={handleClick}
     >
       <div className="ml-auto">
         <span className="flex gap-2 items-center">
