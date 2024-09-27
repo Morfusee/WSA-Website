@@ -1,6 +1,5 @@
 import { Container } from "@mui/material";
 import welcome_logo from "../../assets/images/welcome.svg";
-import { Colors } from "../../utils/Colors";
 import logo from "../../assets/images/logo.png";
 
 function Dashboard() {
@@ -51,24 +50,36 @@ function StatisticsCard({ title, value }: { title: string; value: number }) {
 
 function CurrentItemsTable() {
   return (
-    <section className="flex flex-col gap-2 p-6 text-white rounded-md shadow-sm bg-primary-dark">
+    <section className="flex flex-col gap-3.5 p-6 text-white rounded-md shadow-sm bg-primary-dark">
       <h1 className="font-semibold tracking-wide">
         Current Items in the Laundry
       </h1>
-      <div className="flex flex-col gap-2">
-        <span className="flex px-4 py-2 bg-gray-600 rounded-md items-center gap-4">
-          <img src={logo} alt="" className="size-14" />
-          <span className="flex flex-col">
-            <h1 className="font-semibold">Lorem ipsum dolor sit amet.</h1>
-            <p className="text-sm">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
-              illo.
-            </p>
-          </span>
-          <GoButton className="ml-auto" />
-        </span>
-      </div>
+      <CurrentItemsCard />
+      <CurrentItemsCard />
+      <CurrentItemsCard />
     </section>
+  );
+}
+
+function CurrentItemsCard() {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="flex px-4 py-2 bg-gray-600 rounded-md items-center gap-4">
+        <img
+          src={logo}
+          alt=""
+          className="w-14 h-10 object-contain bg-blue-100 rounded-md"
+        />
+        <span className="flex flex-col">
+          <h1 className="font-semibold">Lorem ipsum dolor sit amet.</h1>
+          <p className="text-sm">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
+            illo.
+          </p>
+        </span>
+        <GoButton className="ml-auto" />
+      </span>
+    </div>
   );
 }
 
@@ -76,7 +87,7 @@ function GoButton({ className }: { className?: string }) {
   return (
     <button
       className={
-        "rounded-md px-4 py-2 w-fit font-semibold text-sm text-white bg-primary-main hover:bg-blue-500 " +
+        "rounded-md px-4 py-2 w-fit font-semibold text-sm text-white bg-primary-main hover:bg-blue-300 " +
         className
       }
     >
