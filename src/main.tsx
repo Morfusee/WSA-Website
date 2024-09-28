@@ -36,6 +36,22 @@ export const theme = createTheme({
         },
       },
     },
+    MuiFab: {
+      styleOverrides: {
+        root: {
+          position: "absolute",
+          bottom: "3rem",
+          right: "3rem",
+        },
+        primary: {
+          backgroundColor: Colors.primary.main,
+          color: "white",
+          "&:hover": {
+            backgroundColor: Colors.primary.dark,
+          },
+        }
+      },
+    },
   },
   palette: {
     background: Colors.background,
@@ -58,13 +74,7 @@ createRoot(document.getElementById("root")!).render(
       <CssBaseline />
       <GlobalStyles
         styles={{
-          button: {
-            color: colors.grey[100],
-          },
-          h1: {
-            color: colors.grey[100],
-          },
-          p: {
+          "button, h1, h2, h3, h4, h5, h6, p": {
             color: colors.grey[100],
           },
         }}
