@@ -13,6 +13,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Modern browsers with `scrollbar-*` support */
+@supports (scrollbar-width: auto) {
+  .scroller {
+    scrollbar-color: var(--primary-dark) transparent;
+  }
+}
+
+/* Legacy browsers with `::-webkit-scrollbar-*` support */
+@supports selector(::-webkit-scrollbar) {
+  .scroller::-webkit-scrollbar-thumb {
+    background: var(--primary-dark);
+  }
+  .scroller::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
 .path-group {
   opacity: 0;
   animation: fadeInDesktop 1s ease forwards;
