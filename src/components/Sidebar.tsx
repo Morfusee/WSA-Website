@@ -37,10 +37,10 @@ function NavButtons({
   return (
     <button
       className={
-        "p-4 rounded-md font-semibold tracking-wider hover:bg-gray-600 " +
+        "p-4 rounded-md font-semibold tracking-wider " +
         (location.pathname.includes(displayText.toLowerCase())
           ? "text-gray-100 bg-primary-main"
-          : "text-gray-300")
+          : "text-gray-300 hover:bg-gray-600")
       }
       onClick={handleClick}
     >

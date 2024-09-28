@@ -10,10 +10,24 @@ function TopNav() {
         backgroundColor: Colors.primary.dark,
       }}
     >
-      <IconButton color="primary">
+      <IconButton
+        color="primary"
+        sx={{
+          "&:hover": {
+            backgroundColor: Colors.background.default,
+          },
+        }}
+      >
         <Notifications htmlColor={Colors.primary.light} />
       </IconButton>
-      <IconButton color="primary">
+      <IconButton
+        color="primary"
+        sx={{
+          "&:hover": {
+            backgroundColor: Colors.background.default,
+          },
+        }}
+      >
         <Avatar sx={{ height: "1.7rem", width: "1.7rem" }} />
       </IconButton>
     </div>

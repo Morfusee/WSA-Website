@@ -1,8 +1,13 @@
 import { Add, FormatListBulleted, Sort } from "@mui/icons-material";
 import { Container, Fab, IconButton, Pagination } from "@mui/material";
 import logo from "../../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function Wardrobe() {
+  const navigate = useNavigate();
+  const handleFabClick = () => {
+    navigate("/wardrobe/add");
+  };
   return (
     <Container
       maxWidth="lg"
@@ -15,10 +20,10 @@ function Wardrobe() {
       <Pagination shape="rounded" hideNextButton hidePrevButton count={10} />
       <section className="flex gap-4 flex-wrap">
         {Array.from(Array(10)).map((x, i) => (
-          <WardrobeCard key={i} />
+          <WardrobeCard key={i} id={i.toString()} />
         ))}
       </section>
-      <Fab color="primary" aria-label="add">
+      <Fab color="primary" aria-label="add" onClick={handleFabClick}>
         <Add />
       </Fab>
     </Container>
@@ -79,9 +84,18 @@ function ViewButtonGroup() {
   );
 }
 
-function WardrobeCard() {
+function WardrobeCard({ id }: { id: string }) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/wardrobe/${id}`);
+  };
+
   return (
-    <div className="flex flex-col min-w-[32%] gap-3 bg-primary-dark p-4 rounded-md">
+    <div
+      onClick={handleCardClick}
+      className="flex flex-col min-w-[32%] gap-3 hover:cursor-pointer hover:bg-gray-600 bg-primary-dark p-4 rounded-md"
+    >
       <img
         src={logo}
         alt="logo"
