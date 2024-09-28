@@ -3,6 +3,7 @@ import Login from "./pages/login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/dashboard";
 import Wardrobe from "./pages/wardrobe";
+import CreateWardrobe from "./pages/wardrobe/create";
 
 function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,10 @@ function App() {
         {
           path: "wardrobe",
           element: <Wardrobe />,
+        },
+        {
+          path: "wardrobe/add",
+          element: <CreateWardrobe />,
         },
       ],
     },
