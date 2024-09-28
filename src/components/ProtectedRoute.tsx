@@ -4,7 +4,7 @@ import TopNav from "./TopNav";
 
 function ProtectedRoute() {
   return (
-    <div className="flex w-full h-screen divide-x divide-gray-700">
+    <div className="flex w-full h-screen overflow-hidden divide-x divide-gray-700">
       <Sidebar />
       <div className="flex flex-col h-full w-full">
         <TopNav />

@@ -80,7 +80,7 @@ function WardrobeCard() {
       <img
         src={logo}
         alt="logo"
-        className="bg-gray-800 p-2 rounded-md max-h-56 object-contain"
+        className="bg-gray-800 shadow-sm p-2 rounded-md max-h-56 object-contain"
       />
       <div className="flex justify-between pt-3">
         <div className="flex gap-2 items-center">

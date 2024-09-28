@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png";
 
 function Dashboard() {
   return (
-    <Container maxWidth="lg" className="flex flex-col gap-4 p-5">
+    <Container maxWidth="lg" className="flex flex-col gap-4 p-5 overflow-y-auto">
       <WelcomeCard />
       <section className="flex gap-4">
         <StatisticsCard title="Total Number of Tops" value={12} />
@@ -68,7 +68,7 @@ function CurrentItemsCard() {
         <img
           src={logo}
           alt=""
-          className="w-14 h-10 object-contain bg-blue-100 rounded-md"
+          className="w-14 h-10 object-contain bg-gray-700 rounded-md"
         />
         <span className="flex flex-col">
           <h1 className="font-semibold">Lorem ipsum dolor sit amet.</h1>
