@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Colors } from "../utils/Colors";
 import Logo from "../assets/images/logo.png";
 import {
   Checkroom,
@@ -10,7 +9,7 @@ import {
 
 function Sidebar() {
   return (
-    <div className="w-1/2 max-w-60 h-full p-4 pt-0 flex flex-col gap-3 bg-primary-dark">
+    <div className="min-w-60 max-w-60 h-full p-4 pt-0 flex flex-col gap-3 bg-primary-dark">
       <img src={Logo} alt="Logo" className="size-16 my-3" />
       <nav className="flex flex-col gap-2">
         <NavButtons displayText="Dashboard" Icon={Dashboard} />
