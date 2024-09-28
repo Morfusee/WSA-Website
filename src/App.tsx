@@ -4,6 +4,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/dashboard";
 import Wardrobe from "./pages/wardrobe";
 import CreateWardrobe from "./pages/wardrobe/create";
+import Details from "./pages/wardrobe/details";
+import Laundry from "./pages/laundry";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,6 +28,14 @@ function App() {
         {
           path: "wardrobe/add",
           element: <CreateWardrobe />,
+        },
+        {
+          path: "wardrobe/:id",
+          element: <Details />,
+        },
+        {
+          path: "laundry",
+          element: <Laundry />,
         },
       ],
     },
