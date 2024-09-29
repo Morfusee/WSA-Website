@@ -106,7 +106,7 @@ function LoginForm(props: any) {
         loading={loading}
         failed={failed}
       />
-      <SignUpButton />
+      {/* <SignUpButton /> */}
     </>
   );
 }
