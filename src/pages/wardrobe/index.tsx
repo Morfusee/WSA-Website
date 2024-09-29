@@ -2,6 +2,7 @@ import { Add, FormatListBulleted, Sort } from "@mui/icons-material";
 import { Container, Fab, IconButton, Pagination } from "@mui/material";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import TypeButton from "../../components/TypeButton";
 
 function Wardrobe() {
   const navigate = useNavigate();
@@ -37,25 +38,6 @@ function TypeButtonGroup() {
       <TypeButton label="Bottom" />
       <TypeButton label="Undergarments" />
     </section>
-  );
-}
-
-function TypeButton({
-  label,
-  className,
-}: {
-  label: string;
-  className?: string;
-}) {
-  return (
-    <button
-      className={
-        "bg-primary-dark hover:bg-primary-main text-gray-100 rounded-md min-h-0 px-6 py-2 " +
-        className
-      }
-    >
-      {label}
-    </button>
   );
 }
 

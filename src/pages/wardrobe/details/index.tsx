@@ -9,7 +9,7 @@ function Details() {
   const handleClickBack = () => {
     navigate(-1);
   };
-  
+
   return (
     <Container
       maxWidth="sm"
@@ -44,18 +44,9 @@ function Details() {
         </div>
         <Divider />
         <div className="flex justify-between gap-1.5 flex-wrap">
-          <span className="flex flex-col text-sm">
-            <h2 className="text-lg">Previous Session</h2>
-            <h3 className="text-gray-300">Session 8</h3>
-          </span>
-          <span className="flex flex-col text-sm">
-            <h2 className="text-lg">Last Washed</h2>
-            <h3 className="text-gray-300">September 23, 2024</h3>
-          </span>
-          <span className="flex flex-col text-sm">
-            <h2 className="text-lg">Date Added</h2>
-            <h3 className="text-gray-300">September 23, 2024</h3>
-          </span>
+          <InfoHeirarchy title="Previous Session" value="Session 8" />
+          <InfoHeirarchy title="Last Washed" value="September 23, 2024" />
+          <InfoHeirarchy title="Date Added" value="September 23, 2024" />
         </div>
         <Divider />
         <span className="flex flex-col text-sm">
@@ -68,6 +59,15 @@ function Details() {
         </span>
       </section>
     </Container>
+  );
+}
+
+function InfoHeirarchy({ title, value }: { title: string; value: string }) {
+  return (
+    <span className="flex flex-col text-sm">
+      <h2 className="text-lg">{title}</h2>
+      <h3 className="text-gray-300">{value}</h3>
+    </span>
   );
 }
 

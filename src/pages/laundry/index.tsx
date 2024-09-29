@@ -7,6 +7,7 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Laundry() {
   return (
@@ -64,8 +65,8 @@ function TopSection() {
 
 function SessionTable() {
   return (
-    <section className="grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_1rem] gap-y-2">
-      <span className="col-span-3 grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_1rem]">
+    <section className="grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem] gap-y-2">
+      <span className="col-span-3 grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem]">
         <h1 className="font-semibold col-span-1">Name</h1>
         <h1 className="font-semibold col-span-1 hidden sm:block">
           Date Sent Out
@@ -73,15 +74,24 @@ function SessionTable() {
       </span>
       <Divider className="col-span-3" />
       {Array.from(Array(7)).map((x, i) => (
-        <SessionTableCard key={i} />
+        <SessionTableCard key={i} id={i.toString()} />
       ))}
     </section>
   );
 }
 
-function SessionTableCard() {
+function SessionTableCard({ id }: { id: string }) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/laundry/${id}`);
+  };
+
   return (
-    <span className="col-span-3 items-center grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_1rem] bg-primary-dark p-5 rounded-md relative">
+    <span
+      onClick={handleCardClick}
+      className="col-span-3 hover:cursor-pointer hover:bg-gray-700 items-center grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem] bg-primary-dark p-5 rounded-md relative"
+    >
       <h1 className="font-semibold col-span-2 sm:col-span-1 flex items-center gap-2">
         <span className="bg-orange-400 rounded-full size-2.5" />
         Session 1
