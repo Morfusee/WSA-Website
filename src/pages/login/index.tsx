@@ -163,9 +163,10 @@ function LoginFields({
       />
       <Button
         variant="contained"
-        size="small"
+        // size="small"
         sx={{
           color: colors.grey[100],
+          bgcolor: "primary.main",
         }}
         onClick={handleLogin}
       >
