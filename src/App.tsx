@@ -7,6 +7,8 @@ import CreateWardrobe from "./pages/wardrobe/create";
 import Details from "./pages/wardrobe/details";
 import Laundry from "./pages/laundry";
 import Contents from "./pages/laundry/contents";
+import CreateLaundry from "./pages/laundry/create";
+import AddContents from "./pages/laundry/contents/create";
 
 function App() {
   const router = createBrowserRouter([
@@ -41,6 +43,14 @@ function App() {
         {
           path: "laundry/:id",
           element: <Contents />,
+        },
+        {
+          path: "laundry/create",
+          element: <CreateLaundry />,
+        },
+        {
+          path: "laundry/:id/add",
+          element: <AddContents />,
         },
       ],
     },

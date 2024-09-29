@@ -22,6 +22,12 @@ function Laundry() {
 }
 
 function TopSection() {
+  const navigate = useNavigate();
+
+  const handleAddClick = () => {
+    navigate("/laundry/create");
+  };
+
   return (
     <section className="flex gap-2 items-center">
       <TextField
@@ -55,7 +61,7 @@ function TopSection() {
           },
         }}
       />
-      <Button className="flex gap-1.5 items-center">
+      <Button className="flex gap-1.5 items-center" onClick={handleAddClick}>
         <Add fontSize="small" />
         Add Laundry
       </Button>
