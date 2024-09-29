@@ -6,15 +6,22 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TypeButton from "../../../components/TypeButton";
 import logo from "../../../assets/images/logo.png";
 
 function Contents() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleClickBack = () => {
     navigate(-1);
   };
+
+  const handleClickAdd = () => {
+    navigate(`${location.pathname}/add`);
+  };
+  
   return (
     <Container
       maxWidth="lg"
@@ -67,6 +74,7 @@ function Contents() {
             sx={{
               ml: "auto",
             }}
+            onClick={handleClickAdd}
           >
             <Add fontSize="small" />
             Add Items
