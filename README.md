@@ -3,4 +3,4 @@ Welcome to Washing Machine — a project designed to showcase our group's profic
 
 ## To Get Started
 
-To access the whole site, just press the **Login** button on the initial page. It will redirect you to the Dashboard
+To access the whole site, just press the **Log In** button on the initial page. It will redirect you to the Dashboard
