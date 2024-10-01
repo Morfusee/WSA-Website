@@ -88,9 +88,9 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           color: colors.grey[400],
-        },
-        focused: {
-          color: colors.grey[500],
+          "&.Mui-focused": {
+            color: colors.grey[500],
+          },
         },
       },
     },
