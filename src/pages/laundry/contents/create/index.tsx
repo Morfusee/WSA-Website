@@ -25,7 +25,7 @@ function AddContents() {
         </h1>
       </span>
       <section className="flex justify-between flex-wrap gap-y-2">
-        <span className="flex gap-1">
+        <span className="flex gap-1 overflow-y-auto">
           <TypeButton label="Top" />
           <TypeButton label="Bottom" />
           <TypeButton label="Undergarments" />
@@ -71,11 +71,11 @@ function ClothesCard() {
       <img
         src={logo}
         alt=""
-        className="w-14 h-10 object-contain bg-gray-800 rounded-md"
+        className="w-14 h-10 min-w-14 min-h-10 object-contain bg-gray-800 rounded-md"
       />
       <span className="flex flex-col">
-        <h1 className="font-semibold">Lorem ipsum dolor sit amet.</h1>
-        <p className="text-sm">
+        <h1 className="font-semibold line-clamp-1">Lorem ipsum dolor sit amet.</h1>
+        <p className="text-sm line-clamp-2">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
           illo.
         </p>
