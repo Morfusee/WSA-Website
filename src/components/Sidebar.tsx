@@ -9,7 +9,7 @@ import {
 
 function Sidebar() {
   return (
-    <div className="min-w-60 max-w-60 h-full p-4 pt-0 flex flex-col gap-3 bg-primary-dark">
+    <div className="min-w-60 hidden md:flex max-w-60 h-full p-4 pt-0 flex-col gap-3 bg-primary-dark">
       <img src={Logo} alt="Logo" className="size-16 my-3" />
       <nav className="flex flex-col gap-2">
         <NavButtons displayText="Dashboard" Icon={Dashboard} />
