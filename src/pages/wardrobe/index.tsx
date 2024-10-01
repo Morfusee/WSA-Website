@@ -12,9 +12,9 @@ function Wardrobe() {
   return (
     <Container
       maxWidth="lg"
-      className="flex flex-col gap-4 p-5 overflow-y-auto"
+      className="flex flex-col gap-3 p-5 overflow-y-auto"
     >
-      <section className="w-full flex justify-between flex-wrap">
+      <section className="w-full flex justify-between flex-wrap gap-y-2">
         <TypeButtonGroup />
         <ViewButtonGroup />
       </section>
@@ -33,7 +33,7 @@ function Wardrobe() {
 
 function TypeButtonGroup() {
   return (
-    <section className="flex gap-2">
+    <section className="flex gap-2 overflow-y-auto">
       <TypeButton label="Top" />
       <TypeButton label="Bottom" />
       <TypeButton label="Undergarments" />
@@ -76,7 +76,7 @@ function WardrobeCard({ id }: { id: string }) {
   return (
     <div
       onClick={handleCardClick}
-      className="flex flex-col min-w-[32%] gap-3 hover:cursor-pointer hover:bg-gray-600 bg-primary-dark p-4 rounded-md"
+      className="flex flex-col flex-[0_1_100%] md:flex-[0_1_100%] lg:flex-[0_1_48%] xl:flex-[1_1_32%] gap-3 hover:cursor-pointer hover:bg-gray-600 bg-primary-dark p-4 rounded-md"
     >
       <img
         src={logo}
@@ -84,12 +84,12 @@ function WardrobeCard({ id }: { id: string }) {
         className="bg-gray-800 shadow-sm p-2 rounded-md max-h-56 object-contain"
       />
       <span className="flex flex-col gap-0.5">
-        <h1 className="text-gray-200 font-semibold">Lorem, ipsum dolor.</h1>
+        <h1 className="text-gray-200 font-semibold line-clamp-1">Lorem, ipsum dolor.</h1>
         <h6 className="text-gray-300 text-sm">Top</h6>
         <div className="flex items-center gap-1.5 text-sm">
           <h6 className="text-gray-300">Available</h6>
-          <span className="size-1 bg-gray-300 rounded-full" />
-          <h6 className="text-gray-300">September 23, 2024</h6>
+          <span className="size-1 min-w-1 min-h-1 bg-gray-300 rounded-full" />
+          <h6 className="text-gray-300 line-clamp-1">September 23, 2024</h6>
         </div>
       </span>
     </div>
