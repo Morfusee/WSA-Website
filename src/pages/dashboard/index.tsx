@@ -6,10 +6,10 @@ function Dashboard() {
   return (
     <Container maxWidth="lg" className="flex flex-col gap-4 p-5 overflow-y-auto">
       <WelcomeCard />
-      <section className="flex gap-4">
-        <StatisticsCard title="Total Number of Tops" value={12} />
-        <StatisticsCard title="Total Number of Bottoms" value={12} />
-        <StatisticsCard title="Total Number of Undergarments" value={12} />
+      <section className="flex gap-4 flex-wrap">
+        <StatisticsCard title="Tops" value={12} />
+        <StatisticsCard title="Bottoms" value={12} />
+        <StatisticsCard title="Undergarments" value={12} />
       </section>
       <CurrentItemsTable />
     </Container>
@@ -41,7 +41,7 @@ function WelcomeCard() {
 
 function StatisticsCard({ title, value }: { title: string; value: number }) {
   return (
-    <div className="flex flex-col flex-1 justify-between bg-primary-dark gap-4 rounded-md p-6 text-gray-200 shadow-sm">
+    <div className="flex flex-col flex-[1_0_30%] justify-between bg-primary-dark gap-4 rounded-md p-6 text-gray-200 shadow-sm">
       <h1 className="font-semibold">{title}</h1>
       <h2 className="text-3xl">{value}</h2>
     </div>
@@ -68,11 +68,11 @@ function CurrentItemsCard() {
         <img
           src={logo}
           alt=""
-          className="w-14 h-10 object-contain bg-gray-700 rounded-md"
+          className="w-14 h-10 min-w-14 min-h-10 object-contain bg-gray-700 rounded-md"
         />
         <span className="flex flex-col">
-          <h1 className="font-semibold">Lorem ipsum dolor sit amet.</h1>
-          <p className="text-sm">
+          <h1 className="font-semibold line-clamp-1">Lorem ipsum dolor sit amet.</h1>
+          <p className="text-sm line-clamp-1">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
             illo.
           </p>
