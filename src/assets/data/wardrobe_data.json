@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "Black T-Shirt - White Logo",
+    "description": "Black T-Shirt with a white logo on the front",
+    "clothing_category": "Top",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 8"
+  },
+  {
+    "id": 2,
+    "name": "Blue Jeans",
+    "description": "Blue jeans with a slim fit",
+    "clothing_category": "Bottom",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 7"
+  },
+  {
+    "id": 3,
+    "name": "Red Hoodie",
+    "description": "Red hoodie with a kangaroo pocket",
+    "clothing_category": "Top",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 6"
+  },
+  {
+    "id": 4,
+    "name": "Black Dress",
+    "description": "Black dress with a v-neck",
+    "clothing_category": "Top",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 5"
+  },
+  {
+    "id": 5,
+    "name": "White T-Shirt - Black Logo",
+    "description": "White T-Shirt with a black logo on the front",
+    "clothing_category": "Top",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 4"
+  },
+  {
+    "id": 6,
+    "name": "Black Shorts",
+    "description": "Black shorts with an elastic waistband",
+    "clothing_category": "Bottom",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 3"
+  },
+  {
+    "id": 7,
+    "name": "Blue Jeans",
+    "description": "Blue jeans with a slim fit",
+    "clothing_category": "Bottom",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 2"
+  },
+  {
+    "id": 8,
+    "name": "Black Leggings",
+    "description": "Black leggings with a high waist",
+    "clothing_category": "Bottom",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 1"
+  },
+  {
+    "id": 9,
+    "name": "White Shorts",
+    "description": "White shorts with a drawstring waist",
+    "clothing_category": "Bottom",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 12"
+  },
+  {
+    "id": 10,
+    "name": "Blue Jeans",
+    "description": "Blue jeans with a slim fit",
+    "clothing_category": "Bottom",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 11"
+  },
+  {
+    "id": 11,
+    "name": "Black Bra",
+    "description": "Black bra with adjustable straps",
+    "clothing_category": "Undergarments",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 10"
+  },
+  {
+    "id": 12,
+    "name": "White Bra",
+    "description": "White bra with adjustable straps",
+    "clothing_category": "Undergarments",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 9"
+  },
+  {
+    "id": 13,
+    "name": "Black Underwear",
+    "description": "Black underwear with a seamless design",
+    "clothing_category": "Undergarments",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 14"
+  },
+  {
+    "id": 14,
+    "name": "White Underwear",
+    "description": "White underwear with a seamless design",
+    "clothing_category": "Undergarments",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 13"
+  },
+  {
+    "id": 15,
+    "name": "Black Underwear",
+    "description": "Black underwear with a seamless design",
+    "clothing_category": "Undergarments",
+    "status": "Available",
+    "date_added": "September 23, 2024",
+    "last_washed": "September 30, 2024",
+    "previous_session": "Session 15"
+  }
+]

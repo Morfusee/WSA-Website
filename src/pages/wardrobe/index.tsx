@@ -1,14 +1,44 @@
 import { Add, FormatListBulleted, Sort } from "@mui/icons-material";
 import { Container, Fab, IconButton, Pagination } from "@mui/material";
 import logo from "../../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TypeButton from "../../components/TypeButton";
+import WardrobeData from "../../assets/data/wardrobe_data.json";
+import {
+  ClothingCategory,
+  IWardrobe,
+  Status,
+} from "../../interfaces/IWardrobe";
+import TopImage from "../../assets/images/top.png";
+import BottomImage from "../../assets/images/bottoms.png";
+import UndergarmentImage from "../../assets/images/undergarments.png";
+import { useEffect, useState } from "react";
 
 function Wardrobe() {
+  const [WardrobeItems, setWardrobeItems] = useState<IWardrobe[]>(
+    WardrobeData as IWardrobe[]
+  );
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.search) {
+      const filterWord = location.search.split("?")[1];
+      setWardrobeItems(handleFilter(filterWord));
+    }
+  }, [location.search]);
+
+  const handleFilter = (filterWord: string) => {
+    return WardrobeItems.filter((item) =>
+      item.clothing_category.toLowerCase().includes(filterWord.toLowerCase())
+    );
+  };
+
   const navigate = useNavigate();
   const handleFabClick = () => {
     navigate("/wardrobe/add");
   };
+
   return (
     <Container
       maxWidth="lg"
@@ -20,8 +50,15 @@ function Wardrobe() {
       </section>
       <Pagination shape="rounded" hideNextButton hidePrevButton count={10} />
       <section className="flex gap-4 flex-wrap">
-        {Array.from(Array(10)).map((x, i) => (
-          <WardrobeCard key={i} id={i.toString()} />
+        {WardrobeItems.map((data, index) => (
+          <WardrobeCard
+            key={data.id}
+            id={data.id}
+            name={data.name}
+            clothing_category={data.clothing_category as ClothingCategory}
+            last_washed={data.last_washed}
+            status={data.status as Status}
+          />
         ))}
       </section>
       <Fab color="primary" aria-label="add" onClick={handleFabClick}>
@@ -66,11 +103,30 @@ function ViewButtonGroup() {
   );
 }
 
-function WardrobeCard({ id }: { id: string }) {
+function WardrobeCard({
+  id,
+  name,
+  clothing_category,
+  status,
+  last_washed,
+}: Omit<IWardrobe, "description" | "date_added" | "previous_session">) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/wardrobe/${id}`);
+  };
+
+  const handleImagePlaceholder = (category: ClothingCategory) => {
+    switch (category) {
+      case "Top":
+        return TopImage;
+      case "Bottom":
+        return BottomImage;
+      case "Undergarments":
+        return UndergarmentImage;
+      default:
+        return logo;
+    }
   };
 
   return (
@@ -79,17 +135,17 @@ function WardrobeCard({ id }: { id: string }) {
       className="flex flex-col flex-[0_1_100%] md:flex-[0_1_100%] lg:flex-[0_1_48%] xl:flex-[1_1_32%] gap-3 hover:cursor-pointer hover:bg-gray-600 bg-primary-dark p-4 rounded-md"
     >
       <img
-        src={logo}
+        src={handleImagePlaceholder(clothing_category)}
         alt="logo"
         className="bg-gray-800 shadow-sm p-2 rounded-md max-h-56 object-contain"
       />
       <span className="flex flex-col gap-0.5">
-        <h1 className="text-gray-200 font-semibold line-clamp-1">Lorem, ipsum dolor.</h1>
-        <h6 className="text-gray-300 text-sm">Top</h6>
+        <h1 className="text-gray-200 font-semibold line-clamp-1">{name}</h1>
+        <h6 className="text-gray-300 text-sm">{clothing_category}</h6>
         <div className="flex items-center gap-1.5 text-sm">
-          <h6 className="text-gray-300">Available</h6>
+          <h6 className="text-gray-300">{status}</h6>
           <span className="size-1 min-w-1 min-h-1 bg-gray-300 rounded-full" />
-          <h6 className="text-gray-300 line-clamp-1">September 23, 2024</h6>
+          <h6 className="text-gray-300 line-clamp-1">{last_washed}</h6>
         </div>
       </span>
     </div>
