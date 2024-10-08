@@ -22,16 +22,18 @@ function Wardrobe() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.search) {
-      const filterWord = location.search.split("?")[1];
-      setWardrobeItems(handleFilter(filterWord));
+    if (!location.search) {
+      return setWardrobeItems(WardrobeData as IWardrobe[]);
     }
+
+    const filterWord = location.search.split("?")[1];
+    setWardrobeItems(handleFilter(filterWord));
   }, [location.search]);
 
   const handleFilter = (filterWord: string) => {
-    return WardrobeItems.filter((item) =>
+    return WardrobeData.filter((item) =>
       item.clothing_category.toLowerCase().includes(filterWord.toLowerCase())
-    );
+    ) as IWardrobe[];
   };
 
   const navigate = useNavigate();
@@ -69,11 +71,37 @@ function Wardrobe() {
 }
 
 function TypeButtonGroup() {
+  const clothing_category = [
+    "Top",
+    "Bottom",
+    "Undergarments",
+  ] as ClothingCategory[];
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleTypeButtonClick = (category: ClothingCategory) => {
+    if (location.search.includes(category.toLowerCase())) {
+      return navigate("/wardrobe");
+    }
+    
+    navigate(`/wardrobe?${category.toLocaleLowerCase()}`);
+  };
+
+  const isCategoryActive = (category: ClothingCategory) => {
+    return location.search.includes(category.toLowerCase());
+  };
+
   return (
     <section className="flex gap-2 overflow-y-auto">
-      <TypeButton label="Top" />
-      <TypeButton label="Bottom" />
-      <TypeButton label="Undergarments" />
+      {clothing_category.map((category, index) => (
+        <TypeButton
+          key={index}
+          label={category}
+          onClick={() => handleTypeButtonClick(category)}
+          active={isCategoryActive(category)}
+        />
+      ))}
     </section>
   );
 }
