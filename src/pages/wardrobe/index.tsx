@@ -12,23 +12,10 @@ import {
 import TopImage from "../../assets/images/top.png";
 import BottomImage from "../../assets/images/bottoms.png";
 import UndergarmentImage from "../../assets/images/undergarments.png";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function Wardrobe() {
-  const [WardrobeItems, setWardrobeItems] = useState<IWardrobe[]>(
-    WardrobeData as IWardrobe[]
-  );
-
   const location = useLocation();
-
-  useEffect(() => {
-    if (!location.search) {
-      return setWardrobeItems(WardrobeData as IWardrobe[]);
-    }
-
-    const filterWord = location.search.split("?")[1];
-    setWardrobeItems(handleFilter(filterWord));
-  }, [location.search]);
 
   const handleFilter = (filterWord: string) => {
     return WardrobeData.filter((item) =>
@@ -36,10 +23,27 @@ function Wardrobe() {
     ) as IWardrobe[];
   };
 
+  const handleSort = (WardrobeItems: IWardrobe[]) => {
+    return WardrobeItems.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+  };
+
   const navigate = useNavigate();
+
   const handleFabClick = () => {
     navigate("/wardrobe/add");
   };
+
+  const WardrobeItems = useMemo(() => {
+    if (!location.search) {
+      return handleSort(WardrobeData as IWardrobe[]);
+    }
+
+    const filterWord = location.search.split("?")[1];
+
+    return handleSort(handleFilter(filterWord));
+  }, [location.search]);
 
   return (
     <Container
@@ -84,7 +88,7 @@ function TypeButtonGroup() {
     if (location.search.includes(category.toLowerCase())) {
       return navigate("/wardrobe");
     }
-    
+
     navigate(`/wardrobe?${category.toLocaleLowerCase()}`);
   };
 
