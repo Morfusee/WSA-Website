@@ -3,7 +3,6 @@ import { Container, Fab, IconButton, Pagination } from "@mui/material";
 import logo from "../../assets/images/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import TypeButton from "../../components/TypeButton";
-import WardrobeData from "../../assets/data/wardrobe_data.json";
 import {
   ClothingCategory,
   IWardrobe,
@@ -13,12 +12,14 @@ import TopImage from "../../assets/images/top.png";
 import BottomImage from "../../assets/images/bottoms.png";
 import UndergarmentImage from "../../assets/images/undergarments.png";
 import { useEffect, useMemo, useState } from "react";
+import { useBoundStore } from "../../utils/store";
 
 function Wardrobe() {
+  const WardrobeSlice = useBoundStore((state) => state.wardrobeItems);
   const location = useLocation();
 
   const handleFilter = (filterWord: string) => {
-    return WardrobeData.filter((item) =>
+    return WardrobeSlice.filter((item) =>
       item.clothing_category.toLowerCase().includes(filterWord.toLowerCase())
     ) as IWardrobe[];
   };
@@ -37,7 +38,7 @@ function Wardrobe() {
 
   const WardrobeItems = useMemo(() => {
     if (!location.search) {
-      return handleSort(WardrobeData as IWardrobe[]);
+      return handleSort(WardrobeSlice as IWardrobe[]);
     }
 
     const filterWord = location.search.split("?")[1];

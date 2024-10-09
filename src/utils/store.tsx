@@ -1,5 +1,6 @@
 import { create, StateCreator } from "zustand";
 import { IWardrobe } from "../interfaces/IWardrobe";
+import WardrobeData from "../assets/data/wardrobe_data.json";
 
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -7,19 +8,22 @@ const options: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-const createWardrobeSlice: StateCreator<IWardrobe> = (set) => ({
-  id: new Date().getTime(),
-  name: "",
-  description: "",
-  clothing_category: "Top",
-  status: "Available",
-  last_washed: new Date().toLocaleDateString(undefined, options),
-  previous_session: "",
-  date_added: new Date().toLocaleDateString(undefined, options),
+interface ICreateWardrobeSlice {
+  wardrobeItems: IWardrobe[];
+  //   setWardrobeItems: (wardrobeItems: IWardrobe[]) => void;
+  createWardrobeItem: (wardrobe: IWardrobe) => void;
+}
 
-  createWardrobeItem: (wardrobe: IWardrobe) => set(wardrobe),
+const createWardrobeSlice: StateCreator<ICreateWardrobeSlice> = (set) => ({
+  wardrobeItems: WardrobeData as IWardrobe[],
+
+  //   setWardrobeItems: (wardrobeItems: IWardrobe[]) => set({ wardrobeItems }),
+  createWardrobeItem: (wardrobe: IWardrobe) =>
+    set((state) => ({
+      wardrobeItems: [...state.wardrobeItems, wardrobe],
+    })),
 });
 
-export const useBoundStore = create<IWardrobe>()((...args) => ({
+export const useBoundStore = create<ICreateWardrobeSlice>()((...args) => ({
   ...createWardrobeSlice(...args),
 }));
