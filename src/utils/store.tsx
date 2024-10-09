@@ -10,12 +10,18 @@ const options: Intl.DateTimeFormatOptions = {
 
 interface ICreateWardrobeSlice {
   wardrobeItems: IWardrobe[];
+  wardrobePageConfig: {
+    formatType: "list" | "grid";
+  };
   //   setWardrobeItems: (wardrobeItems: IWardrobe[]) => void;
   createWardrobeItem: (wardrobe: IWardrobe) => void;
 }
 
 const createWardrobeSlice: StateCreator<ICreateWardrobeSlice> = (set) => ({
   wardrobeItems: WardrobeData as IWardrobe[],
+  wardrobePageConfig: {
+    formatType: "grid",
+  },
 
   //   setWardrobeItems: (wardrobeItems: IWardrobe[]) => set({ wardrobeItems }),
   createWardrobeItem: (wardrobe: IWardrobe) =>

@@ -1,7 +1,12 @@
 import { Add, FormatListBulleted, Sort } from "@mui/icons-material";
 import { Container, Fab, IconButton, Pagination } from "@mui/material";
 import logo from "../../assets/images/logo.png";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  SetURLSearchParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import TypeButton from "../../components/TypeButton";
 import {
   ClothingCategory,
@@ -15,8 +20,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useBoundStore } from "../../utils/store";
 
 function Wardrobe() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const WardrobeSlice = useBoundStore((state) => state.wardrobeItems);
-  const location = useLocation();
 
   const handleFilter = (filterWord: string) => {
     return WardrobeSlice.filter((item) =>
@@ -24,27 +31,32 @@ function Wardrobe() {
     ) as IWardrobe[];
   };
 
-  const handleSort = (WardrobeItems: IWardrobe[]) => {
+  const handleAscendingSort = (WardrobeItems: IWardrobe[]) => {
+    return WardrobeItems.sort((a, b) => {
+      return b.name.localeCompare(a.name);
+    });
+  };
+
+  const handleDescendingSort = (WardrobeItems: IWardrobe[]) => {
     return WardrobeItems.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
   };
-
-  const navigate = useNavigate();
 
   const handleFabClick = () => {
     navigate("/wardrobe/add");
   };
 
   const WardrobeItems = useMemo(() => {
-    if (!location.search) {
-      return handleSort(WardrobeSlice as IWardrobe[]);
-    }
+    const category = searchParams.get("category");
+    const isAscending = searchParams.has("sort");
 
-    const filterWord = location.search.split("?")[1];
+    const items = category ? handleFilter(category) : WardrobeSlice;
 
-    return handleSort(handleFilter(filterWord));
-  }, [location.search]);
+    return isAscending
+      ? handleAscendingSort(items)
+      : handleDescendingSort(items);
+  }, [searchParams]);
 
   return (
     <Container
@@ -53,7 +65,10 @@ function Wardrobe() {
     >
       <section className="w-full flex justify-between flex-wrap gap-y-2">
         <TypeButtonGroup />
-        <ViewButtonGroup />
+        <ViewButtonGroup
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+        />
       </section>
       <Pagination shape="rounded" hideNextButton hidePrevButton count={10} />
       <section className="flex gap-4 flex-wrap">
@@ -90,7 +105,7 @@ function TypeButtonGroup() {
       return navigate("/wardrobe");
     }
 
-    navigate(`/wardrobe?${category.toLocaleLowerCase()}`);
+    navigate(`/wardrobe?category=${category.toLocaleLowerCase()}`);
   };
 
   const isCategoryActive = (category: ClothingCategory) => {
@@ -111,7 +126,21 @@ function TypeButtonGroup() {
   );
 }
 
-function ViewButtonGroup() {
+function ViewButtonGroup({
+  searchParams,
+  setSearchParams,
+}: {
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+}) {
+  const handleSortClick = () => {
+    setSearchParams((params) => {
+      params.has("sort") ? params.delete("sort") : params.append("sort", "asc");
+
+      return params;
+    });
+  };
+
   return (
     <span className="flex gap-2 items-center">
       <IconButton
@@ -120,8 +149,16 @@ function ViewButtonGroup() {
             backgroundColor: "primary.main",
           },
         }}
+        onClick={handleSortClick}
       >
-        <Sort htmlColor="white" />
+        <Sort
+          htmlColor="white"
+          sx={{
+            transform: searchParams.has("sort")
+              ? "rotate(180deg) scaleX(-1)"
+              : "rotate(0deg)",
+          }}
+        />
       </IconButton>
       <IconButton
         sx={{
