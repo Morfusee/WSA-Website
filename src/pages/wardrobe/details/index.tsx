@@ -2,21 +2,19 @@ import { Container, Divider, IconButton } from "@mui/material";
 import logo from "../../../assets/images/logo.png";
 import { ArrowBack, Edit } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
-import WardrobeData from "../../../assets/data/wardrobe_data.json";
 import { useState } from "react";
 import { ClothingCategory, IWardrobe } from "../../../interfaces/IWardrobe";
 import TopImage from "../../../assets/images/top.png";
 import BottomImage from "../../../assets/images/bottoms.png";
 import UndergarmentImage from "../../../assets/images/undergarments.png";
+import { useBoundStore } from "../../../utils/store";
 
 function Details() {
-  const [WardrobeItems, setWardrobeItems] = useState<IWardrobe[]>(
-    WardrobeData as IWardrobe[]
-  );
+  const { wardrobeItems } = useBoundStore();
 
   const location = useLocation();
 
-  const WardrobeItem = WardrobeItems.find(
+  const WardrobeItem = wardrobeItems.find(
     (item) => item.id === +location.pathname.split("/")[2]
   );
 
