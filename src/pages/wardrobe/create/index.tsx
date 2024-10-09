@@ -11,14 +11,47 @@ import {
   TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useBoundStore } from "../../../utils/store";
+import { useState } from "react";
+import { IWardrobe } from "../../../interfaces/IWardrobe";
+import { toLocaleDateStringOptions } from "../../../utils/DateFormat";
 
 function CreateWardrobe() {
+  const { createWardrobeItem } = useBoundStore();
+  const [category, setCategory] = useState("");
+
   const navigate = useNavigate();
 
   const handleCancelClick = () => {
     navigate("/wardrobe");
   };
-  
+
+  const handleAddClick = (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent the form from submitting
+    e.preventDefault();
+
+    // Get the form data
+    const formData = new FormData(e.currentTarget);
+
+    formData.forEach((value, key) => console.log({ [key]: value }));
+
+    const wardrobePayload = {
+      id: new Date().getTime(),
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      clothing_category: formData.get("category") as string,
+      date_added: new Date().toLocaleDateString(
+        undefined,
+        toLocaleDateStringOptions
+      ),
+      last_washed: "N/A",
+      previous_session: "N/A",
+      status: "Available",
+    } as IWardrobe;
+
+    createWardrobeItem(wardrobePayload);
+  };
+
   return (
     <Container
       maxWidth="md"
@@ -27,7 +60,7 @@ function CreateWardrobe() {
       <h1 className="text-xl font-bold text-gray-300 opacity-85">
         Add Clothes
       </h1>
-      <section className="flex flex-col gap-2.5">
+      <form className="flex flex-col gap-2.5" onSubmit={handleAddClick}>
         <TextField
           label="Name"
           sx={{
@@ -36,6 +69,7 @@ function CreateWardrobe() {
             },
           }}
           required
+          name="name"
         />
         <TextField
           label="Description"
@@ -46,6 +80,7 @@ function CreateWardrobe() {
               borderRadius: "0.75rem",
             },
           }}
+          name="description"
         />
         <FormControl>
           <InputLabel>Clothing Category</InputLabel>
@@ -56,6 +91,9 @@ function CreateWardrobe() {
                 borderRadius: "0.75rem",
               },
             }}
+            name="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value={"Top"}>Top</MenuItem>
             <MenuItem value={"Bottom"}>Bottom</MenuItem>
@@ -75,6 +113,7 @@ function CreateWardrobe() {
                 color: "primary.main",
               },
             }}
+            type="submit"
           >
             Add
           </Button>
@@ -88,7 +127,7 @@ function CreateWardrobe() {
             Cancel
           </Button>
         </Box>
-      </section>
+      </form>
     </Container>
   );
 }

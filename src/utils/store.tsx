@@ -2,19 +2,13 @@ import { create, StateCreator } from "zustand";
 import { IWardrobe } from "../interfaces/IWardrobe";
 import WardrobeData from "../assets/data/wardrobe_data.json";
 
-const options: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-};
-
 interface ICreateWardrobeSlice {
   wardrobeItems: IWardrobe[];
   wardrobePageConfig: {
     formatType: "list" | "grid";
   };
-  //   setWardrobeItems: (wardrobeItems: IWardrobe[]) => void;
   createWardrobeItem: (wardrobe: IWardrobe) => void;
+  setWardrobePageFormatType: (formatType: "list" | "grid") => void;
 }
 
 const createWardrobeSlice: StateCreator<ICreateWardrobeSlice> = (set) => ({
@@ -22,12 +16,16 @@ const createWardrobeSlice: StateCreator<ICreateWardrobeSlice> = (set) => ({
   wardrobePageConfig: {
     formatType: "grid",
   },
-
-  //   setWardrobeItems: (wardrobeItems: IWardrobe[]) => set({ wardrobeItems }),
   createWardrobeItem: (wardrobe: IWardrobe) =>
     set((state) => ({
       wardrobeItems: [...state.wardrobeItems, wardrobe],
     })),
+  setWardrobePageFormatType: (formatType) =>
+    set({
+      wardrobePageConfig: {
+        formatType: formatType,
+      },
+    }),
 });
 
 export const useBoundStore = create<ICreateWardrobeSlice>()((...args) => ({
