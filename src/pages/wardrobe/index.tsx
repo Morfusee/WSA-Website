@@ -1,5 +1,18 @@
-import { Add, FormatListBulleted, Sort, GridView } from "@mui/icons-material";
-import { Container, Fab, IconButton, Pagination } from "@mui/material";
+import {
+  Add,
+  FormatListBulleted,
+  Sort,
+  GridView,
+  Search,
+} from "@mui/icons-material";
+import {
+  Container,
+  Fab,
+  IconButton,
+  InputAdornment,
+  Pagination,
+  TextField,
+} from "@mui/material";
 import logo from "../../assets/images/logo.png";
 import {
   SetURLSearchParams,
@@ -66,14 +79,51 @@ function Wardrobe() {
       maxWidth="lg"
       className="flex flex-col gap-3 p-5 overflow-y-auto"
     >
-      <section className="w-full flex justify-between flex-wrap gap-y-2">
+      <section className="w-full flex justify-between flex-wrap gap-2">
+        <TextField
+          placeholder="Search"
+          variant="standard"
+          className="w-full lg:w-[21.9rem]"
+          // className="flex-[0_0_50%]"
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search
+                    fontSize="small"
+                    sx={{
+                      color: "#A0AAB4",
+                      opacity: 0.5,
+                    }}
+                  />
+                </InputAdornment>
+              ),
+              sx: {
+                backgroundColor: "primary.dark",
+                borderRadius: 1,
+                px: 1.6,
+                py: 0.3,
+                height: 37,
+                "& .MuiInputBase-input": {
+                  color: "#A0AAB4",
+                },
+              },
+              disableUnderline: true,
+            },
+          }}
+        />
         <TypeButtonGroup />
+        {/* <div className="w-full flex justify-between flex-wrap gap-y-2"> */}
+
+        {/* </div> */}
+      </section>
+      <section className="w-full flex justify-between flex-wrap gap-y-2">
+        <Pagination shape="rounded" hideNextButton hidePrevButton count={10} />
         <ViewButtonGroup
           searchParams={searchParams}
           setSearchParams={setSearchParams}
         />
       </section>
-      <Pagination shape="rounded" hideNextButton hidePrevButton count={10} />
       <FormatFactory WardrobeItems={WardrobeItems} formatType={formatType} />
       <Fab color="primary" aria-label="add" onClick={handleFabClick}>
         <Add />
