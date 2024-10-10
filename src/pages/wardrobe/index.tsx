@@ -21,7 +21,6 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import TypeButton from "../../components/TypeButton";
 import {
   ClothingCategory,
   IWardrobe,
@@ -32,6 +31,8 @@ import BottomImage from "../../assets/images/bottoms.png";
 import UndergarmentImage from "../../assets/images/undergarments.png";
 import { useEffect, useMemo, useState } from "react";
 import { useBoundStore } from "../../utils/store";
+import TypeButtonGroup from "../../components/TypeButtonGroup";
+import ViewButtonGroup from "../../components/ViewButtonGroup";
 
 function Wardrobe() {
   const navigate = useNavigate();
@@ -211,102 +212,6 @@ function FormatFactory({
         />
       ))}
     </section>
-  );
-}
-
-function TypeButtonGroup() {
-  const clothing_category = [
-    "Top",
-    "Bottom",
-    "Undergarments",
-  ] as ClothingCategory[];
-
-  const location = useLocation();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleTypeButtonClick = (category: ClothingCategory) => {
-    setSearchParams((params) => {
-      if (params.get("category") === category.toLowerCase()) {
-        params.delete("category");
-        return params;
-      }
-      params.set("category", category.toLowerCase());
-      return params;
-    });
-  };
-
-  const isCategoryActive = (category: ClothingCategory) => {
-    return location.search.includes(category.toLowerCase());
-  };
-
-  return (
-    <section className="flex gap-2 overflow-y-auto">
-      {clothing_category.map((category, index) => (
-        <TypeButton
-          key={index}
-          label={category}
-          onClick={() => handleTypeButtonClick(category)}
-          active={isCategoryActive(category)}
-        />
-      ))}
-    </section>
-  );
-}
-
-function ViewButtonGroup() {
-  const { setWardrobePageFormatType, wardrobePageConfig } = useBoundStore();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleSortClick = () => {
-    setSearchParams((params) => {
-      params.has("sort") ? params.delete("sort") : params.append("sort", "asc");
-
-      return params;
-    });
-  };
-
-  const handleFormatClick = () => {
-    wardrobePageConfig.formatType === "list"
-      ? setWardrobePageFormatType("grid")
-      : setWardrobePageFormatType("list");
-  };
-
-  return (
-    <span className="flex gap-2 items-center">
-      <IconButton
-        sx={{
-          "&:hover": {
-            backgroundColor: "primary.main",
-          },
-        }}
-        onClick={handleSortClick}
-      >
-        <Sort
-          htmlColor="white"
-          sx={{
-            transform: searchParams.has("sort")
-              ? "rotate(180deg) scaleX(-1)"
-              : "rotate(0deg)",
-          }}
-        />
-      </IconButton>
-      <IconButton
-        sx={{
-          "&:hover": {
-            backgroundColor: "primary.main",
-          },
-        }}
-        onClick={handleFormatClick}
-      >
-        {wardrobePageConfig.formatType === "list" ? (
-          <GridView htmlColor="white" />
-        ) : (
-          <FormatListBulleted htmlColor="white" />
-        )}
-      </IconButton>
-    </span>
   );
 }
 

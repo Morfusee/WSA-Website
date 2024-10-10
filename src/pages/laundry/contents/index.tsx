@@ -6,22 +6,94 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
-import TypeButton from "../../../components/TypeButton";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
+import { useBoundStore } from "../../../utils/store";
+import { ClothingCategory, IWardrobe } from "../../../interfaces/IWardrobe";
+import TopImage from "../../../assets/images/top.png";
+import BottomImage from "../../../assets/images/bottoms.png";
+import UndergarmentImage from "../../../assets/images/undergarments.png";
+import { useMemo } from "react";
+import TypeButtonGroup from "../../../components/TypeButtonGroup";
+import ViewButtonGroup from "../../../components/ViewButtonGroup";
 
 function Contents() {
+  const { laundryItems, wardrobeItems } = useBoundStore();
+
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sessionId = location.pathname.split("/")[2];
+
+  const sessionData = laundryItems.find(
+    (item) => item.id.toString() === sessionId
+  );
+
+  const fetchedLaundryItems = wardrobeItems.filter((wardrobeItem) =>
+    sessionData?.laundry_items.some((id) => wardrobeItem.id == id)
+  );
 
   const handleClickBack = () => {
-    navigate(-1);
+    navigate(`/laundry`);
   };
 
   const handleClickAdd = () => {
     navigate(`${location.pathname}/add`);
   };
-  
+
+  const handleFilter = (
+    items: IWardrobe[],
+    filterWord: string,
+    key: keyof Omit<IWardrobe, "id">
+  ) => {
+    return items.filter((item) =>
+      item[key].toLowerCase().includes(filterWord.toLowerCase())
+    ) as IWardrobe[];
+  };
+
+  const handleAscendingSort = (items: IWardrobe[]) => {
+    return items.sort((a, b) => {
+      return b.name.localeCompare(a.name);
+    });
+  };
+
+  const handleDescendingSort = (items: IWardrobe[]) => {
+    return items.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+  };
+
+  const laundryItemsMemo = useMemo(() => {
+    const category = searchParams.get("category");
+    const isAscending = searchParams.has("sort");
+    const searchQuery = searchParams.get("search");
+
+    const items = category
+      ? handleFilter(fetchedLaundryItems, category, "clothing_category")
+      : fetchedLaundryItems;
+
+    // This sort of acts as a guard clause for the search query
+    const searchedItems = searchQuery
+      ? handleFilter(items, searchQuery, "name")
+      : items;
+
+    return isAscending
+      ? handleAscendingSort(searchedItems)
+      : handleDescendingSort(searchedItems);
+  }, [searchParams]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams((params) => {
+      if (e.target.value === "") {
+        params.delete("search");
+        return params;
+      }
+      params.set("search", e.target.value);
+      return params;
+    });
+  };
+
   return (
     <Container
       maxWidth="lg"
@@ -32,7 +104,7 @@ function Contents() {
           <ArrowBack />
         </IconButton>
         <h1 className="font-semibold text-lg text-gray-300 tracking-wide">
-          Session 1
+          {sessionData?.session_name}
         </h1>
       </span>
 
@@ -42,6 +114,7 @@ function Contents() {
             placeholder="Search"
             variant="standard"
             className="flex-1"
+            onChange={handleSearch}
             slotProps={{
               input: {
                 startAdornment: (
@@ -80,42 +153,67 @@ function Contents() {
             Add Items
           </Button>
         </span>
-        <section className="flex gap-2 overflow-y-auto">
-          <TypeButton label="Top" />
-          <TypeButton label="Bottom" />
-          <TypeButton label="Undergarments" />
-          <IconButton
-            sx={{
-              ml: "auto",
-            }}
-          >
-            <Sort />
-          </IconButton>
+        <section className="flex gap-2 overflow-y-auto justify-between">
+          <TypeButtonGroup />
+          <ViewButtonGroup hideFormatButton />
         </section>
       </section>
       <section className="flex flex-col gap-2">
-        {Array.from(Array(10)).map((x, i) => (
-          <ContentsCard key={i} />
+        {laundryItemsMemo.map((item, index) => (
+          <ContentsCard
+            name={item.name}
+            clothing_category={item.clothing_category}
+            status={item.status}
+            description={item.description}
+            key={item.id}
+          />
         ))}
       </section>
     </Container>
   );
 }
 
-function ContentsCard() {
+function ContentsCard({
+  name,
+  clothing_category,
+  status,
+  description,
+}: Omit<IWardrobe, "id" | "last_washed" | "date_added" | "previous_session">) {
+  const handleImagePlaceholder = (category: ClothingCategory) => {
+    switch (category) {
+      case "Top":
+        return TopImage;
+      case "Bottom":
+        return BottomImage;
+      case "Undergarments":
+        return UndergarmentImage;
+      default:
+        return logo;
+    }
+  };
+
   return (
-    <div className="flex px-4 py-2 bg-primary-dark rounded-md items-center gap-4">
+    <div
+      // onClick={() => handleCardClick(id)}
+      className="flex px-4 py-2 bg-primary-dark rounded-md items-center gap-4"
+    >
       <img
-        src={logo}
+        src={handleImagePlaceholder(clothing_category)}
         alt=""
-        className="w-14 h-10 min-w-14 min-h-10 object-contain bg-gray-800 rounded-md"
+        className="w-14 h-14 min-w-14 min-h-14 p-2 object-contain bg-gray-800 rounded-md"
       />
       <span className="flex flex-col">
-        <h1 className="font-semibold line-clamp-1">Lorem ipsum dolor sit amet.</h1>
-        <p className="text-sm line-clamp-2">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
-          illo.
-        </p>
+        <h1 className="font-semibold line-clamp-1">{name}</h1>
+        <span className="text-sm text-white line-clamp-1 flex">
+          <div className="flex flex-col">
+            <p>{status}</p>
+            <span className="flex items-center gap-1.5">
+              <p>{clothing_category}</p>
+              <span className="size-1 min-w-1 min-h-1 bg-gray-300 rounded-full" />
+              <p className="line-clamp-1">{description}</p>
+            </span>
+          </div>
+        </span>
       </span>
       <CustomSelect />
     </div>

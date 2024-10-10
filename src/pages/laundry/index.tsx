@@ -8,6 +8,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useBoundStore } from "../../utils/store";
+import { ILaundry } from "../../interfaces/ILaundry";
 
 function Laundry() {
   return (
@@ -70,6 +72,7 @@ function TopSection() {
 }
 
 function SessionTable() {
+  const { laundryItems } = useBoundStore();
   return (
     <section className="grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem] gap-y-2">
       <span className="col-span-3 grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem]">
@@ -79,14 +82,23 @@ function SessionTable() {
         </h1>
       </span>
       <Divider className="col-span-3" />
-      {Array.from(Array(7)).map((x, i) => (
-        <SessionTableCard key={i} id={i.toString()} />
+      {laundryItems.map((item, index) => (
+        <SessionTableCard
+          key={item.id}
+          id={item.id}
+          session_name={item.session_name}
+          session_date={item.session_date}
+        />
       ))}
     </section>
   );
 }
 
-function SessionTableCard({ id }: { id: string }) {
+function SessionTableCard({
+  id,
+  session_name,
+  session_date,
+}: Omit<ILaundry, "laundry_items">) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -100,11 +112,9 @@ function SessionTableCard({ id }: { id: string }) {
     >
       <h1 className="font-semibold col-span-2 sm:col-span-1 flex items-center gap-2">
         <span className="bg-orange-400 rounded-full size-2.5" />
-        Session 1
+        {session_name}
       </h1>
-      <h2 className="col-span-1 truncate hidden sm:block">
-        September 23, 2024
-      </h2>
+      <h2 className="col-span-1 truncate hidden sm:block">{session_date}</h2>
       <IconButton size="small" className="col-span-1">
         <MoreVert fontSize="small" />
       </IconButton>
