@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import logo from "../../assets/images/logo.png";
 import {
+  NavigateOptions,
   SetURLSearchParams,
   useLocation,
   useNavigate,
@@ -41,9 +42,13 @@ function Wardrobe() {
     wardrobePageConfig: { formatType },
   } = useBoundStore((state) => state);
 
-  const handleFilter = (filterWord: string) => {
-    return WardrobeSlice.filter((item) =>
-      item.clothing_category.toLowerCase().includes(filterWord.toLowerCase())
+  const handleFilter = (
+    WardrobeItems: IWardrobe[],
+    filterWord: string,
+    key: keyof Omit<IWardrobe, "id">
+  ) => {
+    return WardrobeItems.filter((item) =>
+      item[key].toLowerCase().includes(filterWord.toLowerCase())
     ) as IWardrobe[];
   };
 
@@ -66,13 +71,32 @@ function Wardrobe() {
   const WardrobeItems = useMemo(() => {
     const category = searchParams.get("category");
     const isAscending = searchParams.has("sort");
+    const searchQuery = searchParams.get("search");
 
-    const items = category ? handleFilter(category) : WardrobeSlice;
+    const items = category
+      ? handleFilter(WardrobeSlice, category, "clothing_category")
+      : WardrobeSlice;
+
+    // This sort of acts as a guard clause for the search query
+    const searchedItems = searchQuery
+      ? handleFilter(items, searchQuery, "name")
+      : items;
 
     return isAscending
-      ? handleAscendingSort(items)
-      : handleDescendingSort(items);
+      ? handleAscendingSort(searchedItems)
+      : handleDescendingSort(searchedItems);
   }, [searchParams]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams((params) => {
+      if (e.target.value === "") {
+        params.delete("search");
+        return params;
+      }
+      params.set("search", e.target.value);
+      return params;
+    });
+  };
 
   return (
     <Container
@@ -84,6 +108,7 @@ function Wardrobe() {
           placeholder="Search"
           variant="standard"
           className="w-full lg:w-[21.9rem]"
+          onChange={handleSearch}
           // className="flex-[0_0_50%]"
           slotProps={{
             input: {
@@ -113,16 +138,10 @@ function Wardrobe() {
           }}
         />
         <TypeButtonGroup />
-        {/* <div className="w-full flex justify-between flex-wrap gap-y-2"> */}
-
-        {/* </div> */}
       </section>
       <section className="w-full flex justify-between flex-wrap gap-y-2">
         <Pagination shape="rounded" hideNextButton hidePrevButton count={10} />
-        <ViewButtonGroup
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
+        <ViewButtonGroup />
       </section>
       <FormatFactory WardrobeItems={WardrobeItems} formatType={formatType} />
       <Fab color="primary" aria-label="add" onClick={handleFabClick}>
@@ -202,15 +221,19 @@ function TypeButtonGroup() {
     "Undergarments",
   ] as ClothingCategory[];
 
-  const navigate = useNavigate();
   const location = useLocation();
 
-  const handleTypeButtonClick = (category: ClothingCategory) => {
-    if (location.search.includes(category.toLowerCase())) {
-      return navigate("/wardrobe");
-    }
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    navigate(`/wardrobe?category=${category.toLocaleLowerCase()}`);
+  const handleTypeButtonClick = (category: ClothingCategory) => {
+    setSearchParams((params) => {
+      if (params.get("category") === category.toLowerCase()) {
+        params.delete("category");
+        return params;
+      }
+      params.set("category", category.toLowerCase());
+      return params;
+    });
   };
 
   const isCategoryActive = (category: ClothingCategory) => {
@@ -231,14 +254,10 @@ function TypeButtonGroup() {
   );
 }
 
-function ViewButtonGroup({
-  searchParams,
-  setSearchParams,
-}: {
-  searchParams: URLSearchParams;
-  setSearchParams: SetURLSearchParams;
-}) {
+function ViewButtonGroup() {
   const { setWardrobePageFormatType, wardrobePageConfig } = useBoundStore();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSortClick = () => {
     setSearchParams((params) => {
@@ -315,13 +334,13 @@ function WardrobeListCard({
       />
       <span className="flex flex-col">
         <h1 className="font-semibold line-clamp-1">{name}</h1>
-        <span className="text-sm text-white line-clamp-2 flex">
+        <span className="text-sm text-white line-clamp-1 flex">
           <div className="flex flex-col">
             <p>{status}</p>
             <span className="flex items-center gap-1.5">
               <p>{clothing_category}</p>
               <span className="size-1 min-w-1 min-h-1 bg-gray-300 rounded-full" />
-              <p>{last_washed}</p>
+              <p className="line-clamp-1">{last_washed}</p>
             </span>
           </div>
         </span>
