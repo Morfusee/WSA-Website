@@ -49,8 +49,8 @@ function WelcomeCard() {
         </span>
         <span className="flex flex-col gap-2 w-full lg:w-2/3">
           <p className="text-sm text-gray-200">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus,
-            doloremque?
+            We hope you're ready for another productive day! Let's dive in and
+            make great things happen together.
           </p>
           <GoButton id={1} />
         </span>
