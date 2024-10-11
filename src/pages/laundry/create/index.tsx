@@ -13,12 +13,40 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../../../utils/Colors";
+import { useBoundStore } from "../../../utils/store";
+import { ILaundry } from "../../../interfaces/ILaundry";
+import { toLocaleDateStringOptions } from "../../../utils/DateFormat";
 
 function CreateLaundry() {
+  const { createLaundryItem } = useBoundStore();
   const navigate = useNavigate();
 
   const handleCancelClick = () => {
     navigate("/laundry");
+  };
+
+  const handleAddClick = (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent the form from submitting
+    e.preventDefault();
+
+    // Get the form data
+    const formData = new FormData(e.currentTarget);
+
+    const dateObject = new Date(formData.get("date") as string);
+
+    const laundryPayload: ILaundry = {
+      id: new Date().getTime(),
+      session_name: formData.get("name") as string,
+      session_date: dateObject.toLocaleDateString(
+        undefined,
+        toLocaleDateStringOptions
+      ),
+      laundry_items: [],
+    };
+
+    createLaundryItem(laundryPayload);
+
+    handleCancelClick();
   };
 
   return (
@@ -29,8 +57,9 @@ function CreateLaundry() {
       <h1 className="text-xl font-bold text-gray-300 opacity-85">
         Create Laundry Session
       </h1>
-      <section className="flex flex-col gap-2.5">
+      <form className="flex flex-col gap-2.5" onSubmit={handleAddClick}>
         <TextField
+          name="name"
           label="Name"
           sx={{
             "& .MuiInputBase-root": {
@@ -41,6 +70,7 @@ function CreateLaundry() {
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            name="date"
             label="Date Sent Out"
             slotProps={{
               mobilePaper: {
@@ -130,6 +160,7 @@ function CreateLaundry() {
                 color: "primary.main",
               },
             }}
+            type="submit"
           >
             Add
           </Button>
@@ -143,7 +174,7 @@ function CreateLaundry() {
             Cancel
           </Button>
         </Box>
-      </section>
+      </form>
     </Container>
   );
 }
