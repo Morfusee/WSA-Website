@@ -78,20 +78,22 @@ function CurrentItemsTable() {
   );
 
   return (
-    <section className="flex flex-col gap-3.5 p-6 text-white rounded-md shadow-sm bg-primary-dark">
+    <section className="flex flex-col max-h-[70%] lg:max-h-[55%] gap-3.5 p-6 text-white rounded-md shadow-sm bg-primary-dark">
       <h1 className="font-semibold tracking-wide">
         Current Items in the Laundry
       </h1>
-      {currentItems.map((item, index) => (
-        <CurrentItemsCard
-          id={item.id}
-          clothing_category={item.clothing_category}
-          description={item.description}
-          name={item.name}
-          status={item.status}
-          key={item.id}
-        />
-      ))}
+      <div className="overflow-y-auto flex flex-col gap-2">
+        {currentItems.map((item, index) => (
+          <CurrentItemsCard
+            id={item.id}
+            clothing_category={item.clothing_category}
+            description={item.description}
+            name={item.name}
+            status={item.status}
+            key={item.id}
+          />
+        ))}
+      </div>
     </section>
   );
 }
