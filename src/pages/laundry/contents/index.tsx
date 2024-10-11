@@ -81,7 +81,7 @@ function Contents() {
     return isAscending
       ? handleAscendingSort(searchedItems)
       : handleDescendingSort(searchedItems);
-  }, [searchParams]);
+  }, [searchParams, fetchedLaundryItems]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchParams((params) => {
@@ -161,6 +161,7 @@ function Contents() {
       <section className="flex flex-col gap-2">
         {laundryItemsMemo.map((item, index) => (
           <ContentsCard
+            id={item.id}
             name={item.name}
             clothing_category={item.clothing_category}
             status={item.status}
@@ -174,11 +175,12 @@ function Contents() {
 }
 
 function ContentsCard({
+  id,
   name,
   clothing_category,
   status,
   description,
-}: Omit<IWardrobe, "id" | "last_washed" | "date_added" | "previous_session">) {
+}: Omit<IWardrobe, "last_washed" | "date_added" | "previous_session">) {
   const handleImagePlaceholder = (category: ClothingCategory) => {
     switch (category) {
       case "Top":
@@ -215,17 +217,61 @@ function ContentsCard({
           </div>
         </span>
       </span>
-      <CustomSelect />
+      <CustomSelect id={id} status={status} />
     </div>
   );
 }
 
-function CustomSelect() {
+function CustomSelect({
+  id,
+  status,
+}: Omit<
+  IWardrobe,
+  | "name"
+  | "description"
+  | "clothing_category"
+  | "date_added"
+  | "last_washed"
+  | "previous_session"
+>) {
+  const { updateWardrobeItemWithProperty, laundryItems } = useBoundStore();
+  const location = useLocation();
+
+  const handleWardrobeChange = (
+    targetId: number,
+    statusValue: IWardrobe["status"],
+    previousSessionValue: IWardrobe["previous_session"]
+  ) => {
+    updateWardrobeItemWithProperty(targetId, "status", statusValue);
+    updateWardrobeItemWithProperty(
+      targetId,
+      "previous_session",
+      previousSessionValue
+    );
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const sessionData = laundryItems.find(
+      (item) => item.id.toString() === location.pathname.split("/")[2]
+    );
+
+    if (!sessionData) return;
+
+    if (e.target.value === "Pending") {
+      handleWardrobeChange(id, "In Laundry", sessionData.session_name);
+      return;
+    }
+
+    return handleWardrobeChange(id, "Available", sessionData.session_name);
+  };
+
   return (
     <select
       name="CustomSelect"
       id="CustomSelect"
       className="ml-auto bg-gray-800 text-primary-light text-sm px-2 py-1 rounded-md min-w-20"
+      onChange={handleSelectChange}
+      value={status === "Available" ? "Returned" : "Pending"}
     >
       <option value="Pending">Pending</option>
       <option value="Returned">Returned</option>
