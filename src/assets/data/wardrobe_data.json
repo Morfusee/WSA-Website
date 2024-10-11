@@ -4,7 +4,7 @@
     "name": "Black T-Shirt - White Logo",
     "description": "Black T-Shirt with a white logo on the front",
     "clothing_category": "Top",
-    "status": "Available",
+    "status": "In Laundry",
     "date_added": "September 23, 2024",
     "last_washed": "September 30, 2024",
     "previous_session": "Session 8"
@@ -14,7 +14,7 @@
     "name": "Blue Jeans",
     "description": "Blue jeans with a slim fit",
     "clothing_category": "Bottom",
-    "status": "Available",
+    "status": "In Laundry",
     "date_added": "September 23, 2024",
     "last_washed": "September 30, 2024",
     "previous_session": "Session 7"
@@ -24,7 +24,7 @@
     "name": "Red Hoodie",
     "description": "Red hoodie with a kangaroo pocket",
     "clothing_category": "Top",
-    "status": "Available",
+    "status": "In Laundry",
     "date_added": "September 23, 2024",
     "last_washed": "September 30, 2024",
     "previous_session": "Session 6"
@@ -34,7 +34,7 @@
     "name": "Black Dress",
     "description": "Black dress with a v-neck",
     "clothing_category": "Top",
-    "status": "Available",
+    "status": "In Laundry",
     "date_added": "September 23, 2024",
     "last_washed": "September 30, 2024",
     "previous_session": "Session 5"
@@ -44,7 +44,7 @@
     "name": "White T-Shirt - Black Logo",
     "description": "White T-Shirt with a black logo on the front",
     "clothing_category": "Top",
-    "status": "Available",
+    "status": "In Laundry",
     "date_added": "September 23, 2024",
     "last_washed": "September 30, 2024",
     "previous_session": "Session 4"
