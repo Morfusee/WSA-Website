@@ -1,14 +1,15 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Container, IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/images/logo.png";
 import TypeButtonGroup from "../../../../components/TypeButtonGroup";
 
 function AddContents() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClickBack = () => {
-    navigate(-1);
+    navigate(location.pathname.replace("/add", ""));
   };
 
   return (
