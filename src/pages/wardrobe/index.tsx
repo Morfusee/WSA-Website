@@ -110,6 +110,7 @@ function Wardrobe() {
           variant="standard"
           className="w-full lg:w-[21.9rem]"
           onChange={handleSearch}
+          value={searchParams.get("search") || ""}
           // className="flex-[0_0_50%]"
           slotProps={{
             input: {

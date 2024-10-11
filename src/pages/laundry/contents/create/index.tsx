@@ -154,6 +154,7 @@ function AddContents() {
           placeholder="Search"
           variant="standard"
           className="flex-1"
+          value={searchParams.get("search") || ""}
           onChange={handleSearch}
           slotProps={{
             input: {
