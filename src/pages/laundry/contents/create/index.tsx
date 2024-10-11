@@ -44,8 +44,7 @@ function AddContents() {
   );
 
   const filteredWardrobeItems = wardrobeItems.filter(
-    (wardrobeItem) =>
-      !sessionData?.laundry_items.some((id) => wardrobeItem.id == id)
+    (wardrobeItem) => wardrobeItem.status === "Available"
   );
 
   const handleFilter = (
