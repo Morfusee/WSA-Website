@@ -50,6 +50,8 @@ function CreateWardrobe() {
     } as IWardrobe;
 
     createWardrobeItem(wardrobePayload);
+
+    handleCancelClick();
   };
 
   return (
@@ -94,6 +96,7 @@ function CreateWardrobe() {
             name="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            required
           >
             <MenuItem value={"Top"}>Top</MenuItem>
             <MenuItem value={"Bottom"}>Bottom</MenuItem>
