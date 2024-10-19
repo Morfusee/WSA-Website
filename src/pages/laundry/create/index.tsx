@@ -73,6 +73,9 @@ function CreateLaundry() {
             name="date"
             label="Date Sent Out"
             slotProps={{
+              textField: {
+                required: true,
+              },
               mobilePaper: {
                 sx: {
                   backgroundColor: Colors.primary.dark,
