@@ -69,9 +69,9 @@ function Details() {
               <h2 className="">{WardrobeItem.status}</h2>
             </span>
           </div>
-          <IconButton className="size-8">
+          {/* <IconButton className="size-8">
             <Edit htmlColor="white" fontSize="small" />
-          </IconButton>
+          </IconButton> */}
         </div>
         <Divider />
         <div className="flex justify-between gap-1.5 flex-wrap">
