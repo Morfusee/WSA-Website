@@ -115,9 +115,9 @@ function SessionTableCard({
         {session_name}
       </h1>
       <h2 className="col-span-1 truncate hidden sm:block">{session_date}</h2>
-      <IconButton size="small" className="col-span-1">
+      {/* <IconButton size="small" className="col-span-1">
         <MoreVert fontSize="small" />
-      </IconButton>
+      </IconButton> */}
     </span>
   );
 }
