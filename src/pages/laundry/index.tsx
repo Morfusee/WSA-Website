@@ -7,23 +7,69 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useBoundStore } from "../../utils/store";
 import { ILaundry } from "../../interfaces/ILaundry";
+import { useMemo } from "react";
 
 function Laundry() {
+  const { laundryItems } = useBoundStore();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleFilter = (
+    items: ILaundry[],
+    filterWord: string,
+    key: keyof Omit<ILaundry, "id" | "laundry_items">
+  ) => {
+    return items.filter((item) =>
+      item[key].toLowerCase().includes(filterWord.toLowerCase())
+    ) as ILaundry[];
+  };
+
+  const handleDescendingSort = (WardrobeItems: ILaundry[]) => {
+    return WardrobeItems.sort((a, b) => {
+      return a.session_name.localeCompare(b.session_name);
+    });
+  };
+
+  const MemoLaundryItems = useMemo(() => {
+    const searchQuery = searchParams.get("search");
+
+    const searchedItems = searchQuery
+      ? handleFilter(laundryItems, searchQuery, "session_name")
+      : laundryItems;
+
+    return handleDescendingSort(searchedItems);
+  }, [searchParams]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams((params) => {
+      if (e.target.value === "") {
+        params.delete("search");
+        return params;
+      }
+      params.set("search", e.target.value);
+      return params;
+    });
+  };
   return (
     <Container
       maxWidth="lg"
       className="flex flex-col gap-4 p-5 overflow-y-auto"
     >
-      <TopSection />
-      <SessionTable />
+      <TopSection searchParams={searchParams} handleSearch={handleSearch} />
+      <SessionTable laundryItems={MemoLaundryItems} />
     </Container>
   );
 }
 
-function TopSection() {
+function TopSection({
+  searchParams,
+  handleSearch,
+}: {
+  searchParams: URLSearchParams;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   const navigate = useNavigate();
 
   const handleAddClick = () => {
@@ -33,6 +79,8 @@ function TopSection() {
   return (
     <section className="flex gap-2 items-center">
       <TextField
+        value={searchParams.get("search") || ""}
+        onChange={handleSearch}
         placeholder="Search"
         variant="standard"
         className="flex-1"
@@ -71,8 +119,8 @@ function TopSection() {
   );
 }
 
-function SessionTable() {
-  const { laundryItems } = useBoundStore();
+function SessionTable({ laundryItems }: { laundryItems: ILaundry[] }) {
+  // const { laundryItems } = useBoundStore();
   return (
     <section className="grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem] gap-y-2">
       <span className="col-span-3 grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_2rem]">
