@@ -16,9 +16,13 @@ import { useBoundStore } from "../../../utils/store";
 import { useState } from "react";
 import { IWardrobe } from "../../../interfaces/IWardrobe";
 import { toLocaleDateStringOptions } from "../../../utils/DateFormat";
+import CircularProgressBar from "../../../components/CircularProgressBar";
+import Undergarment from "../../../assets/images/undergarments.png";
 
 function CreateWardrobe() {
   const { createWardrobeItem } = useBoundStore();
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [category, setCategory] = useState("");
 
   const navigate = useNavigate();
@@ -63,6 +67,8 @@ function CreateWardrobe() {
       </h1>
       <form className="flex flex-col gap-2.5" onSubmit={handleAddClick}>
         <TextField
+          onChange={(e) => setName(e.target.value)}
+          value={name}
           label="Name"
           sx={{
             "& .MuiInputBase-root": {
@@ -73,6 +79,8 @@ function CreateWardrobe() {
           name="name"
         />
         <TextField
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
           label="Description"
           multiline
           rows={4}
@@ -102,7 +110,11 @@ function CreateWardrobe() {
             <MenuItem value={"Undergarments"}>Undergarments</MenuItem>
           </Select>
         </FormControl>
-        <UploadDragDrop />
+        <UploadDragDrop
+          setName={setName}
+          setDescription={setDescription}
+          setCategory={setCategory}
+        />
         <Box className="flex gap-2 ml-auto">
           <Button
             sx={{
@@ -133,16 +145,88 @@ function CreateWardrobe() {
   );
 }
 
-function UploadDragDrop() {
+function UploadDragDrop({
+  setName,
+  setDescription,
+  setCategory,
+}: {
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  const [progress, setProgress] = useState(10);
+  const [isUploading, setIsUploading] = useState(false);
+  const [imageName, setImageName] = useState<string>("");
+
+  const MockUploadItem = () => {
+    setName("Ben 10 Underwear (AI Generated)");
+    setDescription("This is a Ben 10 underwear (AI Generated).");
+    setCategory("Undergarments");
+    setImageName(Undergarment);
+  };
+
+  const startUpload = () => {
+    setIsUploading(true);
+    const timer = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? 0 : prevProgress + 10
+      );
+    }, 200);
+
+    setTimeout(() => {
+      clearInterval(timer);
+      setIsUploading(false);
+      setProgress(0);
+      MockUploadItem();
+    }, 2000);
+  };
+
   return (
     <span className="w-full h-44 flex items-center justify-center rounded-md border border-dashed">
-      <span className="flex gap-2 items-center">
-        <h1 className="text-gray-400">Drag and drop your image here</h1>
-        <IconButton>
-          <CloudUpload />
-        </IconButton>
+      <span className="flex flex-col items-center">
+        <UploadDragDropContent
+          isUploading={isUploading}
+          imageName={imageName}
+          progress={progress}
+          startUpload={startUpload}
+        />
       </span>
     </span>
+  );
+}
+
+function UploadDragDropContent({
+  isUploading,
+  imageName,
+  progress,
+  startUpload,
+}: {
+  isUploading: boolean;
+  imageName: string;
+  progress: number;
+  startUpload: () => void;
+}) {
+  if (imageName) {
+    return <img src={imageName} alt="Generated Image" />;
+  }
+
+  if (isUploading) {
+    return <CircularProgressBar value={progress} />;
+  }
+
+  return (
+    <>
+      <IconButton onClick={startUpload}>
+        <CloudUpload />
+      </IconButton>
+      <div className="flex flex-col text-center">
+        <h1 className="text-gray-400">Drag and drop your image here</h1>
+        <h6 className="text-sm text-gray-500">
+          Let AI generate the item's information for you.
+          <p className="text-xs text-gray-600">(Just click the icon)</p>
+        </h6>
+      </div>
+    </>
   );
 }
 

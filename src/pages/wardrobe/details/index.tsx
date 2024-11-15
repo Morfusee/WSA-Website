@@ -205,7 +205,7 @@ function EditModeComponent({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-primary-dark shadow-sm p-5 rounded-md flex flex-col gap-2"
+      className="bg-primary-dark shadow-sm p-5 rounded-md flex flex-col gap-4"
     >
       <TextField
         label="Name"
