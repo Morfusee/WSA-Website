@@ -10,6 +10,8 @@ interface ICreateWardrobeSlice {
     formatType: "list" | "grid";
   };
   createWardrobeItem: (wardrobe: IWardrobe) => void;
+  updateWardrobeItem: (id: number, wardrobe: IWardrobe) => void;
+  deleteWardrobeItem: (id: number) => void;
   setWardrobePageFormatType: (formatType: "list" | "grid") => void;
   updateWardrobeItemWithProperty: <T>(
     id: number,
@@ -37,6 +39,16 @@ const createWardrobeSlice: StateCreator<ICreateWardrobeSlice> = (set) => ({
   createWardrobeItem: (wardrobe: IWardrobe) =>
     set((state) => ({
       wardrobeItems: [...state.wardrobeItems, wardrobe],
+    })),
+  updateWardrobeItem: (id: number, wardrobe: IWardrobe) =>
+    set((state) => ({
+      wardrobeItems: state.wardrobeItems.map((item) =>
+        item.id === id ? wardrobe : item
+      ),
+    })),
+  deleteWardrobeItem: (id: number) =>
+    set((state) => ({
+      wardrobeItems: state.wardrobeItems.filter((item) => item.id !== id),
     })),
   setWardrobePageFormatType: (formatType) =>
     set({

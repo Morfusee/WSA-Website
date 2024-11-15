@@ -2,6 +2,7 @@ import { CloudUpload } from "@mui/icons-material";
 import {
   Box,
   Button,
+  colors,
   Container,
   FormControl,
   IconButton,
@@ -32,8 +33,6 @@ function CreateWardrobe() {
 
     // Get the form data
     const formData = new FormData(e.currentTarget);
-
-    formData.forEach((value, key) => console.log({ [key]: value }));
 
     const wardrobePayload = {
       id: new Date().getTime(),
@@ -110,7 +109,6 @@ function CreateWardrobe() {
               padding: "0.5rem 1.5rem",
               width: "fit-content",
               backgroundColor: "primary.main",
-              color: "primary.dark",
               "&:hover": {
                 backgroundColor: "primary.dark",
                 color: "primary.main",

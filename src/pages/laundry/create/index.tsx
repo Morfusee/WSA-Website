@@ -157,7 +157,6 @@ function CreateLaundry() {
               padding: "0.5rem 1.5rem",
               width: "fit-content",
               backgroundColor: "primary.main",
-              color: "primary.dark",
               "&:hover": {
                 backgroundColor: "primary.dark",
                 color: "primary.main",
