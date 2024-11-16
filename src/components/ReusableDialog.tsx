@@ -74,6 +74,7 @@ function ReusableDialog({
           }}
           variant="contained"
           onClick={handleConfirm}
+          type="submit"
         >
           Confirm
         </Button>

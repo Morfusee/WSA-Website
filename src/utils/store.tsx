@@ -24,6 +24,7 @@ interface ICreateLaundrySlice {
   laundryItems: ILaundry[];
 
   createLaundryItem: (laundry: ILaundry) => void;
+  updateLaundryItem: (id: number, laundry: ILaundry) => void;
   updateLaundryItemWithProperty: <T>(
     id: number,
     property: keyof ILaundry,
@@ -80,6 +81,12 @@ const createLaundrySlice: StateCreator<ICreateLaundrySlice> = (set) => ({
   createLaundryItem: (laundry: ILaundry) =>
     set((state) => ({
       laundryItems: [...state.laundryItems, laundry],
+    })),
+  updateLaundryItem: (id: number, laundry: ILaundry) =>
+    set((state) => ({
+      laundryItems: state.laundryItems.map((item) =>
+        item.id === id ? laundry : item
+      ),
     })),
   updateLaundryItemWithProperty: <T,>(
     id: number,

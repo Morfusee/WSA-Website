@@ -22,6 +22,7 @@ import UndergarmentImage from "../../../assets/images/undergarments.png";
 import { useBoundStore } from "../../../utils/store";
 import { toLocaleDateStringOptions } from "../../../utils/DateFormat";
 import ReusableDialog from "../../../components/ReusableDialog";
+import EditModeSwitcher from "../../../components/EditModeSwitcher";
 
 function Details() {
   const { wardrobeItems, deleteWardrobeItem } = useBoundStore();
@@ -150,16 +151,6 @@ function Details() {
       />
     </Container>
   );
-}
-
-function EditModeSwitcher({
-  showChildren,
-  children,
-}: {
-  showChildren: boolean;
-  children: React.ReactNode;
-}) {
-  return showChildren ? <>{children}</> : null;
 }
 
 function EditModeComponent({
